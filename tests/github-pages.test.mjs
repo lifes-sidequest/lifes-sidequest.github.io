@@ -32,4 +32,9 @@ test("deploys the static export with the official GitHub Pages actions", async (
   assert.match(workflow, /actions\/deploy-pages@v4/);
   assert.match(workflow, /path:\s*\.\/out/);
   assert.match(workflow, /pnpm build/);
+  assert.match(
+    workflow,
+    /if:\s*github\.repository == 'lifes-sidequest\/lifes-sidequest\.github\.io'/,
+    "Pages deployment must only run in the dedicated GitHub Pages repository",
+  );
 });
