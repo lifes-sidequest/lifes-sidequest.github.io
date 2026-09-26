@@ -12,7 +12,7 @@ test("defers case-study videos until they approach the viewport", async () => {
 
   assert.match(component, /IntersectionObserver/);
   assert.match(component, /rootMargin: "400px 0px"/);
-  assert.match(component, /video\.src = src/);
+  assert.match(component, /video\.src = isIOS \?/);
   assert.match(component, /video\.pause\(\)/);
   assert.equal((kaspi.match(/<ViewportVideo/g) ?? []).length, 7);
   assert.equal((carParts.match(/<ViewportVideo/g) ?? []).length, 2);
@@ -51,15 +51,32 @@ test("project video cards show a theme-aware poster before the first frame is re
   assert.match(component, /onPlaying/);
 });
 
-test("plays the original Car Parts WebM instead of replacing it with a static poster", async () => {
+test("plays the theme-composited Car Parts video instead of replacing it with a static poster", async () => {
   const component = await readFile(new URL("app/_components/viewport-video.tsx", root), "utf8");
   const caseEnding = await readFile(new URL("app/projects/_components/case-ending.tsx", root), "utf8");
 
   assert.doesNotMatch(component, /useStaticPoster/);
-  assert.match(component, /video\.src = src/);
+  assert.match(component, /video\.src = isIOS \?/);
   assert.match(caseEnding, /car-parts-poster-light\.jpg/);
   assert.match(caseEnding, /car-parts-poster-dark\.jpg/);
   assert.match(caseEnding, /poster=\{next\.poster\?\.\[theme\]\}/);
-  assert.match(caseEnding, /car-parts-light\.webm/);
-  assert.match(caseEnding, /car-parts-dark\.webm/);
+  assert.match(caseEnding, /car-parts-light-bg\.mp4/);
+  assert.match(caseEnding, /car-parts-dark-bg\.mp4/);
+});
+
+test("uses an iOS-safe MP4 fallback while preserving the requested media fit", async () => {
+  const component = await readFile(new URL("app/_components/viewport-video.tsx", root), "utf8");
+  const css = await readFile(new URL("styles/site.css", root), "utf8");
+  const courier = await readFile(new URL("app/projects/kaspi-courier/kaspi-courier-case.tsx", root), "utf8");
+
+  assert.match(component, /mobileSrc\?: string/);
+  assert.match(component, /iPad\|iPhone\|iPod/);
+  assert.match(component, /fit = "cover"/);
+  assert.match(component, /viewport-video-fit-/);
+  assert.match(component, /autoPlay/);
+  assert.match(component, /playsInline/);
+  assert.match(css, /\.viewport-video-fit-contain/);
+  assert.match(css, /background:#f2f2f2/);
+  assert.match(css, /background:#262626/);
+  assert.match(courier, /className="case-media-hero case-project-image"[\s\S]{0,120}fit="cover"/);
 });

@@ -59,7 +59,7 @@ test("For Agents uses one compact external-link icon format beside every page li
   assert.match(styles, /\.agent-profile-links li span\s*\{[^}]*font-size:\s*16px[^}]*line-height:\s*1/s);
 });
 
-test("the custom cursor stays above the agent-mode switch but below the loader", async () => {
+test("the custom cursor stays above the agent-mode switch and loader", async () => {
   const [siteStyles, switchStyles, loaderStyles] = await Promise.all([
     readFile(new URL("styles/site.css", root), "utf8"),
     readFile(new URL("app/agent-mode-switch.css", root), "utf8"),
@@ -71,7 +71,7 @@ test("the custom cursor stays above the agent-mode switch but below the loader",
   const loader = Number(loaderStyles.match(/\.site-loader\{[^}]*z-index:(\d+)/)?.[1]);
 
   assert.ok(cursor > agentSwitch);
-  assert.ok(cursor < loader);
+  assert.ok(cursor > loader);
 });
 
 test("the Links contact block never receives a delayed scroll-reveal hiding state", async () => {

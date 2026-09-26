@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
-import { safeAgentReturnPath } from "../../lib/agent-mode-return.mjs";
+import { normalizeAgentPath, safeAgentReturnPath } from "../../lib/agent-mode-return.mjs";
 import { useSitePreferences } from "./site-preferences";
 
 const returnKey = "portfolio-agent-return";
@@ -10,7 +10,8 @@ export function AgentModeSwitch() {
   const pathname = usePathname();
   const router = useRouter();
   const { language } = useSitePreferences();
-  const isAgentMode = pathname === "/for-agents";
+  const normalizedPathname = normalizeAgentPath(pathname);
+  const isAgentMode = normalizedPathname === "/for-agents";
   const label = isAgentMode
     ? language === "de" ? "ZUM PORTFOLIO" : "FOR HUMANS"
     : language === "de" ? "FÜR AGENTEN" : "FOR AGENTS";
@@ -22,7 +23,7 @@ export function AgentModeSwitch() {
       router.push(destination);
       return;
     }
-    try { window.sessionStorage.setItem(returnKey, pathname); } catch { /* Navigation still works without storage. */ }
+    try { window.sessionStorage.setItem(returnKey, normalizedPathname); } catch { /* Navigation still works without storage. */ }
     router.push("/for-agents");
   };
 

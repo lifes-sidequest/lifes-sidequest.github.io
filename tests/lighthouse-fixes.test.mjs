@@ -8,8 +8,8 @@ test("uses compact first-screen Car Parts artwork", async () => {
   const caseStudy = await readFile(new URL("app/projects/car-parts/car-parts-case.tsx", root), "utf8");
   const light = new URL("public/images/projects/car-parts/car-parts-stack-light.jpg", root);
   const dark = new URL("public/images/projects/car-parts/car-parts-stack-dark.jpg", root);
-  const lightVideo = new URL("public/images/projects/car-parts/car-parts-light.webm", root);
-  const darkVideo = new URL("public/images/projects/car-parts/car-parts-dark.webm", root);
+  const lightVideo = new URL("public/images/projects/car-parts/car-parts-light-bg.mp4", root);
+  const darkVideo = new URL("public/images/projects/car-parts/car-parts-dark-bg.mp4", root);
 
   await Promise.all([access(light), access(dark), access(lightVideo), access(darkVideo)]);
   assert.ok((await stat(light)).size < 700_000);
@@ -20,8 +20,8 @@ test("uses compact first-screen Car Parts artwork", async () => {
   assert.match(caseStudy, /car-parts-stack-light\.jpg/);
   assert.match(caseStudy, /car-parts-poster-dark\.jpg/);
   assert.match(caseStudy, /car-parts-poster-light\.jpg/);
-  assert.match(caseStudy, /car-parts-dark\.webm/);
-  assert.match(caseStudy, /car-parts-light\.webm/);
+  assert.match(caseStudy, /car-parts-dark-bg\.mp4/);
+  assert.match(caseStudy, /car-parts-light-bg\.mp4/);
   assert.match(caseStudy, /fetchPriority="high"/);
   assert.match(caseStudy, /import \{ ViewportImage \}/);
   assert.equal((caseStudy.match(/<ViewportImage/g) ?? []).length, 5);

@@ -9,6 +9,7 @@ import { SiteHeader } from "../_components/site-header";
 import { useSiteClock } from "../_components/site-clock";
 import { useSitePreferences } from "../_components/site-preferences";
 import { ViewportVideo } from "../_components/viewport-video";
+import { CurrencyConverterPromo } from "../_components/currency-converter-promo";
 
 type CatalogProject = {
   title: string;
@@ -71,7 +72,6 @@ export function ProjectsCatalog() {
                       key={`${project.title}-${theme}`}
                       src={mediaSource}
                       poster={posterSource}
-                      className={project.href === "/projects/kaspi-courier" ? "project-media-contain" : undefined}
                       aria-hidden="true"
                     />
                   ) : mediaSource ? (
@@ -109,7 +109,7 @@ export function ProjectsCatalog() {
       <footer id="index" className="scroll-reveal">
         <p>{copy.copyright}</p>
         <p>{time}, Berlin, DE</p>
-        <Link href="/#projects">{copy.work}</Link>
+        <CurrencyConverterPromo language={language} />
       </footer>
     </main>
   );

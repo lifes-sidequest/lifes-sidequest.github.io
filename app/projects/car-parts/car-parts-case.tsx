@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import CardFanCarousel from "@/components/ui/card-fan-carousel";
 import { RevealCharacters } from "../../_components/reveal-characters";
 import { ProjectStatusBadge } from "../../_components/project-status-badge";
@@ -11,6 +10,7 @@ import { ViewportVideo } from "../../_components/viewport-video";
 import { ViewportImage } from "../../_components/viewport-image";
 import { MediaPlaceholder } from "./_components/media-placeholder";
 import { CaseEnding } from "../_components/case-ending";
+import { CurrencyConverterPromo } from "../../_components/currency-converter-promo";
 
 const caseCopyEn = {
   eyebrow: "Kaspi.kz, E-commerce",
@@ -257,8 +257,8 @@ export function CarPartsCase() {
             key={`car-parts-hero-${theme}`}
             src={
               theme === "dark"
-                ? "/images/projects/car-parts/car-parts-dark.webm"
-                : "/images/projects/car-parts/car-parts-light.webm"
+                ? "/images/projects/car-parts/car-parts-dark-bg.mp4"
+                : "/images/projects/car-parts/car-parts-light-bg.mp4"
             }
             poster={theme === "dark"
               ? "/images/projects/car-parts/car-parts-poster-dark.jpg"
@@ -450,7 +450,7 @@ export function CarPartsCase() {
       <footer id="index" className="scroll-reveal">
         <p>{footerCopy.copyright}</p>
         <p>{time}, Berlin, DE</p>
-        <Link href="/#projects">{footerCopy.work}</Link>
+        <CurrencyConverterPromo language={language} />
       </footer>
     </main>
   );

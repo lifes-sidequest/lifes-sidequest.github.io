@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { RevealCharacters } from "../../_components/reveal-characters";
 import { ProjectStatusBadge } from "../../_components/project-status-badge";
 import { SiteHeader } from "../../_components/site-header";
@@ -10,6 +9,7 @@ import { ViewportImage } from "../../_components/viewport-image";
 import { CaseEnding } from "../_components/case-ending";
 import { KaspiEcosystemMap } from "./_components/kaspi-ecosystem-map";
 import { useSitePreferences } from "../../_components/site-preferences";
+import { CurrencyConverterPromo } from "../../_components/currency-converter-promo";
 
 const caseCopy = {
   en: {
@@ -339,7 +339,7 @@ export function KaspiHomeCase() {
       <footer id="index" className="scroll-reveal">
         <p>{copy.copyright}</p>
         <p>{time}, Berlin, DE</p>
-        <Link href="/#projects">{copy.work}</Link>
+        <CurrencyConverterPromo language={language} />
       </footer>
     </main>
   );

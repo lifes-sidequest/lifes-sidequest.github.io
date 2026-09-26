@@ -4,9 +4,26 @@ import { useEffect, useRef, useState, type VideoHTMLAttributes } from "react";
 
 interface ViewportVideoProps extends Omit<VideoHTMLAttributes<HTMLVideoElement>, "src" | "autoPlay" | "preload"> {
   src: string;
+  mobileSrc?: string;
+  fit?: "cover" | "contain";
 }
 
-export function ViewportVideo({ src, className, poster, onPlaying, ...props }: ViewportVideoProps) {
+const iosFallbacks: Record<string, string> = {
+  "/images/projects/car-parts/car-parts-light.webm": "/images/projects/car-parts/car-parts-light-bg.mp4",
+  "/images/projects/car-parts/car-parts-dark.webm": "/images/projects/car-parts/car-parts-dark-bg.mp4",
+  "/images/projects/kaspi-home/searchbar-light-2.webm": "/images/projects/kaspi-home/searchbar-light-web.mp4",
+  "/images/projects/kaspi-home/searchbar-dark.webm": "/images/projects/kaspi-home/searchbar-dark-web.mp4",
+  "/images/projects/kaspi-home/carousel-light-square.webm": "/images/projects/kaspi-home/carousel-light-square-web.mp4",
+  "/images/projects/kaspi-home/carousel-dark-square.webm": "/images/projects/kaspi-home/carousel-dark-square-web.mp4",
+  "/images/projects/kaspi-home/magnum-light-3.webm": "/images/projects/kaspi-home/magnum-light-web.mp4",
+  "/images/projects/kaspi-home/magnum-dark-1.webm": "/images/projects/kaspi-home/magnum-dark-web.mp4",
+  "/images/projects/kaspi-home/all-page-light.webm": "/images/projects/kaspi-home/all-page-light-web.mp4",
+  "/images/projects/kaspi-home/all-page-dark.webm": "/images/projects/kaspi-home/all-page-dark-web.mp4",
+  "/images/projects/kaspi-home/system-light-2.webm": "/images/projects/kaspi-home/system-light-web.mp4",
+  "/images/projects/kaspi-home/system-dark.webm": "/images/projects/kaspi-home/system-dark-web.mp4",
+};
+
+export function ViewportVideo({ src, mobileSrc, fit = "cover", className, poster, onPlaying, ...props }: ViewportVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [hasStarted, setHasStarted] = useState(false);
 
@@ -18,7 +35,8 @@ export function ViewportVideo({ src, className, poster, onPlaying, ...props }: V
     const load = () => {
       if (loaded) return;
       loaded = true;
-      video.src = src;
+      const isIOS = /iPad|iPhone|iPod/.test(window.navigator.userAgent);
+      video.src = isIOS ? (mobileSrc ?? iosFallbacks[src] ?? src) : src;
       video.load();
     };
 
@@ -48,16 +66,17 @@ export function ViewportVideo({ src, className, poster, onPlaying, ...props }: V
       playbackObserver.disconnect();
       video.pause();
     };
-  }, [src]);
+  }, [mobileSrc, src]);
 
   const video = (
     <video
       ref={videoRef}
       {...props}
-      className={poster ? "viewport-video-media" : className}
+      className="viewport-video-media"
       poster={poster}
       muted
       loop
+      autoPlay
       playsInline
       preload="none"
       onPlaying={(event) => {
@@ -67,11 +86,9 @@ export function ViewportVideo({ src, className, poster, onPlaying, ...props }: V
     />
   );
 
-  if (!poster) return video;
-
   return (
-    <span className={`viewport-video-shell${className ? ` ${className}` : ""}${hasStarted ? " is-playing" : ""}`}>
-      <img className="viewport-video-poster" src={poster} alt="" aria-hidden="true" />
+    <span className={`viewport-video-shell viewport-video-fit-${fit}${className ? ` ${className}` : ""}${hasStarted ? " is-playing" : ""}`}>
+      {poster ? <img className="viewport-video-poster" src={poster} alt="" aria-hidden="true" /> : null}
       {video}
     </span>
   );

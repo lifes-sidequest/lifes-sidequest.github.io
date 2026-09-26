@@ -176,8 +176,8 @@ test("links the Car Parts card to its case study", async () => {
   const projects = await readFile(new URL("content/projects.ts", root), "utf8");
   const portfolio = await readFile(new URL("app/_components/portfolio.tsx", root), "utf8");
   assert.match(projects, /title:\s*"Car Parts"[\s\S]*?href:\s*"\/projects\/car-parts"/);
-  assert.match(projects, /image:\s*"\/images\/projects\/car-parts\/car-parts-light\.webm"/);
-  assert.match(projects, /darkImage:\s*"\/images\/projects\/car-parts\/car-parts-dark\.webm"/);
+  assert.match(projects, /image:\s*"\/images\/projects\/car-parts\/car-parts-light-bg\.mp4"/);
+  assert.match(projects, /darkImage:\s*"\/images\/projects\/car-parts\/car-parts-dark-bg\.mp4"/);
   assert.match(portfolio, /mediaSource\?\.endsWith\("\.webm"\)/);
 });
 
@@ -229,8 +229,8 @@ test("builds the Car Parts case study from accessible placeholders", async () =>
   assert.doesNotMatch(caseStudy, /car-parts-impact-primary/);
   assert.doesNotMatch(caseStudy, /This removed manual VIN entry/);
   assert.doesNotMatch(caseStudy, /VIN-based search/);
-  assert.match(caseStudy, /\/images\/projects\/car-parts\/car-parts-light\.webm/);
-  assert.match(caseStudy, /\/images\/projects\/car-parts\/car-parts-dark\.webm/);
+  assert.match(caseStudy, /\/images\/projects\/car-parts\/car-parts-light-bg\.mp4/);
+  assert.match(caseStudy, /\/images\/projects\/car-parts\/car-parts-dark-bg\.mp4/);
   assert.match(caseStudy, /\/images\/projects\/car-parts\/car-parts-stack-light\.jpg/);
   assert.match(caseStudy, /\/images\/projects\/car-parts\/car-parts-stack-dark\.jpg/);
   assert.match(caseStudy, /theme === "dark"/);

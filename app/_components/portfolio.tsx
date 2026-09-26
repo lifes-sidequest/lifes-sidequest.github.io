@@ -12,6 +12,7 @@ import { SiteHeader } from "./site-header";
 import { useSiteClock } from "./site-clock";
 import { useSitePreferences } from "./site-preferences";
 import { FavoriteToolsList } from "./favorite-tools-list";
+import { CurrencyConverterPromo } from "./currency-converter-promo";
 import { CopyEmailButton, portfolioEmailAddress } from "./copy-email-button";
 import { ViewportVideo } from "./viewport-video";
 
@@ -190,7 +191,6 @@ export function Portfolio() {
                     key={`${project.title}-${theme}`}
                     src={mediaSource}
                     poster={posterSource}
-                    className={project.href === "/projects/kaspi-courier" ? "project-media-contain" : undefined}
                     aria-hidden="true"
                   />
                 ) : mediaSource ? (
@@ -274,7 +274,7 @@ export function Portfolio() {
       <footer id="index" className="scroll-reveal">
         <p>{copy.copyright}</p>
         <p>{time}, {copy.city}</p>
-        <a href="#projects">{copy.work}</a>
+        <CurrencyConverterPromo language={language} />
       </footer>
     </main>
   );

@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { aboutContent, aboutResource } from "../../content/about";
 import { socialLinks } from "../../content/social-links";
 import { CopyEmailButton, portfolioEmailAddress } from "../_components/copy-email-button";
@@ -9,6 +8,7 @@ import { SiteHeader } from "../_components/site-header";
 import { useSiteClock } from "../_components/site-clock";
 import { useSitePreferences } from "../_components/site-preferences";
 import { SocialFolder } from "../_components/social-folder";
+import { CurrencyConverterPromo } from "../_components/currency-converter-promo";
 
 function formatBiography(paragraph: string) {
   const phrases = /(e-commerce|E-Commerce|data-backed|AI workflows|KI-Workflows)/g;
@@ -159,7 +159,7 @@ export function AboutPage() {
       <footer id="index" className="scroll-reveal">
         <p>{copy.copyright}</p>
         <p>{time}, Berlin, DE</p>
-        <Link href="/#projects">{copy.work}</Link>
+        <CurrencyConverterPromo language={language} />
       </footer>
     </main>
   );

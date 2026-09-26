@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { ProjectStatusBadge } from "../../_components/project-status-badge";
 import { RevealCharacters } from "../../_components/reveal-characters";
 import { SiteHeader } from "../../_components/site-header";
@@ -8,37 +7,39 @@ import { useSiteClock } from "../../_components/site-clock";
 import { useSitePreferences } from "../../_components/site-preferences";
 import { ViewportVideo } from "../../_components/viewport-video";
 import { CaseEnding } from "../_components/case-ending";
+import { CurrencyConverterPromo } from "../../_components/currency-converter-promo";
+import { CourierEcosystemDiagrams } from "./_components/courier-ecosystem-diagrams";
 
 const copy = {
   en: {
     eyebrow: "Kaspi.kz, Logistic app",
     title: "Kaspi courier",
-    subtitle: "A logistics experience designed to make everyday delivery work clearer and more efficient",
-    intro: "This case study is currently being prepared. It will document the product context, the design process, and the decisions made while shaping the Kaspi courier experience.",
-    results: "Project status",
+    subtitle: "Building an owned express-delivery network inside the Kaspi ecosystem",
+    intro: "Kaspi Delivery brings couriers, customers, orders, payments, and operational data into one connected product. The courier application guides the complete express-delivery cycle—from joining the platform and going online to collecting, routing, delivering, and confirming an order.",
+    results: "Expected outcomes",
     resultItems: [
-      { value: "Active", label: "Product development" },
-      { value: "Private", label: "Project materials" },
-      { value: "Soon", label: "Full case study" },
+      { value: "1.8", label: "Target orders per hour" },
+      { value: "+200%", label: "Expected courier productivity" },
+      { value: "-60%", label: "Target CPO · 2,263 KZT/order" },
     ],
     problem: "Problem",
-    problemText: "The detailed problem statement and supporting context are being prepared for the complete case study.",
+    problemText: "Kaspi did not have its own courier application or delivery workforce. Express orders were fulfilled through Glovo, Wolt, Yandex, and VanOnGo, while Kaspi subsidized delivery fees for customers. This partner model distributed courier relationships, delivery data, transaction flows, and operating hours across external services, limiting control over speed, cost, and the end-to-end customer experience.",
     goalsTitle: "Goals",
-    goals: ["Clarify the core product challenge and the outcomes the team set out to achieve.", "Create a consistent and efficient experience across the courier journey."],
+    goals: ["Create an owned express-delivery network that reduces reliance on external partners and subsidized delivery.", "Increase delivery speed, expand the express-delivery time window, and create new courier jobs inside the Kaspi ecosystem."],
     roleTitle: "My role as a product designer",
-    roles: ["Research and product definition", "Experience design and delivery"],
+    roles: ["Mapped the end-to-end operating model across courier onboarding, order assignment, pickup, routing, delivery, returns, support, and payment.", "Designed the courier mobile experience, interaction states, safeguards, and integration points with the main Kaspi application and banking services."],
     solution: "Solution",
-    solutionText: "The solution overview will explain the selected direction, the key interaction decisions, and how the experience evolved during delivery.",
+    solutionText: "Kaspi creates its own delivery application and brings couriers directly into the ecosystem. Integration with the main Kaspi application enables fast order and status exchange, while connected banking services simplify transactions between couriers and the bank. The owned network is designed to stop subsidizing partner delivery, accelerate fulfilment, extend express-delivery hours, create new jobs, and give Kaspi direct control over the complete delivery experience.",
     before: "Before",
     after: "After",
-    practice: "In practice",
-    ecosystem: "Across the ecosystem",
-    variations: "Variations",
+    practice: "The courier journey",
+    ecosystem: "One connected delivery ecosystem",
+    variations: "Delivery scenarios",
     impact: "Impact",
-    impactTitle: "Work in progress",
-    impactText: "Validated outcomes and product learnings will be added after the project reaches the appropriate release stage.",
+    impactTitle: "A faster, more sustainable delivery model",
+    impactText: "The target operating model is expected to reach 1.8 orders per hour, increase courier productivity by 200%, and reduce CPO by 60% to 2,263 KZT per order. These figures are product and operational targets for the owned Kaspi Delivery network.",
     deeper: "Want to go deeper?",
-    deeperText: "The complete case study is in production. Get in touch if you would like to discuss the project and my role.",
+    deeperText: "The case covers service design, courier operations, mobile UX, and banking integration. Get in touch to learn more.",
     next: "Back to projects",
     nextProject: "Selected work",
     nextClient: "Product design case studies",
@@ -48,32 +49,32 @@ const copy = {
   de: {
     eyebrow: "Kaspi.kz, Logistik-App",
     title: "Kaspi Kurier",
-    subtitle: "Ein Logistikerlebnis, das die tägliche Lieferarbeit klarer und effizienter macht",
-    intro: "Diese Fallstudie wird derzeit vorbereitet. Sie wird den Produktkontext, den Designprozess und die Entscheidungen dokumentieren, die das Erlebnis von Kaspi Kurier geprägt haben.",
-    results: "Projektstatus",
+    subtitle: "Aufbau eines eigenen Express-Liefernetzwerks innerhalb des Kaspi-Ökosystems",
+    intro: "Kaspi Delivery verbindet Kuriere, Kundinnen und Kunden, Bestellungen, Zahlungen und operative Daten in einem Produkt. Die Kurier-App führt durch den gesamten Express-Lieferzyklus – vom Beitritt zur Plattform und Arbeitsbeginn bis zu Abholung, Route, Zustellung und Bestätigung.",
+    results: "Erwartete Ergebnisse",
     resultItems: [
-      { value: "Aktiv", label: "Produktentwicklung" },
-      { value: "Privat", label: "Projektmaterialien" },
-      { value: "Bald", label: "Vollständige Fallstudie" },
+      { value: "1.8", label: "Ziel: Aufträge pro Stunde" },
+      { value: "+200%", label: "Erwartete Kurierproduktivität" },
+      { value: "-60%", label: "Ziel-CPO · 2,263 KZT/Auftrag" },
     ],
     problem: "Problem",
-    problemText: "Die detaillierte Problemstellung und der zugehörige Kontext werden für die vollständige Fallstudie vorbereitet.",
+    problemText: "Kaspi hatte weder eine eigene Kurier-App noch eine eigene Lieferflotte. Express-Bestellungen wurden über Glovo, Wolt, Yandex und VanOnGo abgewickelt, während Kaspi die Lieferkosten für Kundinnen und Kunden subventionierte. Dadurch waren Kurierbeziehungen, Lieferdaten, Transaktionsabläufe und Betriebszeiten auf externe Dienste verteilt, was die Kontrolle über Geschwindigkeit, Kosten und das End-to-End-Erlebnis einschränkte.",
     goalsTitle: "Ziele",
-    goals: ["Die zentrale Produktherausforderung und die angestrebten Ergebnisse klar definieren.", "Ein konsistentes und effizientes Erlebnis entlang der gesamten Kurier-Journey schaffen."],
+    goals: ["Ein eigenes Express-Liefernetzwerk schaffen und die Abhängigkeit von externen Partnern sowie subventionierten Lieferungen reduzieren.", "Lieferungen beschleunigen, das Zeitfenster für Express-Lieferungen erweitern und neue Kurierarbeitsplätze im Kaspi-Ökosystem schaffen."],
     roleTitle: "Meine Rolle als Product Designer",
-    roles: ["Research und Produktdefinition", "Experience Design und Umsetzung"],
+    roles: ["Das End-to-End-Betriebsmodell für Onboarding, Auftragsvergabe, Abholung, Routing, Zustellung, Rückgaben, Support und Auszahlung strukturiert.", "Die mobile Kuriererfahrung, Interaktionszustände, Sicherheitsmechanismen und Integrationspunkte mit der Kaspi-Hauptanwendung und den Bankdiensten gestaltet."],
     solution: "Lösung",
-    solutionText: "Die Lösungsübersicht wird die gewählte Richtung, zentrale Interaktionsentscheidungen und die Entwicklung des Erlebnisses während der Umsetzung erklären.",
+    solutionText: "Kaspi entwickelt eine eigene Liefer-App und bindet Kuriere direkt in das Ökosystem ein. Die Integration mit der Kaspi-Hauptanwendung ermöglicht einen schnellen Austausch von Bestell- und Statusdaten; verbundene Bankdienste vereinfachen Transaktionen zwischen Kurieren und der Bank. Das eigene Netzwerk soll subventionierte Partnerlieferungen ersetzen, die Zustellung beschleunigen, Express-Zeiten erweitern, neue Arbeitsplätze schaffen und Kaspi direkte Kontrolle über das gesamte Liefererlebnis geben.",
     before: "Vorher",
     after: "Nachher",
-    practice: "In der Praxis",
-    ecosystem: "Im gesamten Ökosystem",
-    variations: "Variationen",
+    practice: "Die Kurierreise",
+    ecosystem: "Ein verbundenes Lieferökosystem",
+    variations: "Lieferszenarien",
     impact: "Wirkung",
-    impactTitle: "In Arbeit",
-    impactText: "Validierte Ergebnisse und Produkterkenntnisse werden ergänzt, sobald das Projekt die entsprechende Veröffentlichungsphase erreicht.",
+    impactTitle: "Ein schnelleres und nachhaltigeres Liefermodell",
+    impactText: "Das Zielmodell soll 1.8 Aufträge pro Stunde erreichen, die Kurierproduktivität um 200% steigern und den CPO um 60% auf 2,263 KZT pro Auftrag senken. Diese Werte sind Produkt- und Betriebsziele für das eigene Kaspi-Delivery-Netzwerk.",
     deeper: "Mehr erfahren?",
-    deeperText: "Die vollständige Fallstudie befindet sich in Arbeit. Melden Sie sich gerne, wenn Sie das Projekt und meine Rolle besprechen möchten.",
+    deeperText: "Der Case umfasst Service Design, Kurierprozesse, Mobile UX und Bankintegration. Melden Sie sich, um mehr zu erfahren.",
     next: "Zurück zu den Projekten",
     nextProject: "Ausgewählte Arbeiten",
     nextClient: "Product-Design-Fallstudien",
@@ -121,7 +122,8 @@ export function KaspiCourierCase() {
             poster={theme === "dark"
               ? "/images/projects/kaspi-courier/kaspi-courier-poster-dark.jpg"
               : "/images/projects/kaspi-courier/kaspi-courier-poster-light.jpg"}
-            className="case-media-hero case-project-image project-media-contain"
+            className="case-media-hero case-project-image"
+            fit="cover"
             aria-label="Kaspi courier interface preview"
           />
           <Placeholder className="case-media-wide" label="Kaspi courier project overview placeholder" />
@@ -143,10 +145,7 @@ export function KaspiCourierCase() {
             <div><p>{text.solutionText}</p></div>
           </section>
 
-          <div className="case-media-pair">
-            <article className="case-solution-bento scroll-reveal"><h4>{text.before}</h4></article>
-            <article className="case-solution-bento scroll-reveal"><h4>{text.after}</h4></article>
-          </div>
+          <CourierEcosystemDiagrams language={language} />
         </article>
       </div>
 
@@ -170,13 +169,20 @@ export function KaspiCourierCase() {
         <h3>{text.impact}</h3>
         <div className="case-impact-content">
           <div className="case-impact-story"><section><h4>{text.impactTitle}</h4><p>{text.impactText}</p></section></div>
-          <Placeholder className="case-media-wide kaspi-courier-impact-placeholder" label="Kaspi courier impact placeholder" />
+          <div className="case-impact-metrics">
+            {text.resultItems.map((metric) => (
+              <div key={metric.label}>
+                <strong>{metric.value}</strong>
+                <span>{metric.label}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
       <CaseEnding current="kaspi-courier" language={language} theme={theme} title={text.deeper} description={text.deeperText} />
 
-      <footer id="index" className="scroll-reveal"><p>{text.copyright}</p><p>{time}, Berlin, DE</p><Link href="/#projects">{text.work}</Link></footer>
+      <footer id="index" className="scroll-reveal"><p>{text.copyright}</p><p>{time}, Berlin, DE</p><CurrencyConverterPromo language={language} /></footer>
     </main>
   );
 }

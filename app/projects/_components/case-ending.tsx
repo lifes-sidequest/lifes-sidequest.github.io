@@ -28,7 +28,7 @@ const caseProjects = {
     href: "/projects/car-parts",
     title: { en: "Car Parts", de: "Autoteile" },
     subtitle: { en: "Kaspi.kz, E-commerce", de: "Kaspi.kz, E-Commerce" },
-    media: { light: "/images/projects/car-parts/car-parts-light.webm", dark: "/images/projects/car-parts/car-parts-dark.webm" },
+    media: { light: "/images/projects/car-parts/car-parts-light-bg.mp4", dark: "/images/projects/car-parts/car-parts-dark-bg.mp4" },
     poster: { light: "/images/projects/car-parts/car-parts-poster-light.jpg", dark: "/images/projects/car-parts/car-parts-poster-dark.jpg" },
   },
 } as const;

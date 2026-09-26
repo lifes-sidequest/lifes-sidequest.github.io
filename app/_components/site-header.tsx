@@ -101,6 +101,13 @@ export function SiteHeader({ onHome = false }: { onHome?: boolean }) {
     };
   }, [menuOpen]);
 
+  useEffect(() => {
+    if (!menuOpen) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = previous; };
+  }, [menuOpen]);
+
   const href = (hash: string) => {
     if (hash === "projects") return "/projects";
     if (hash === "about") return "/about";
@@ -114,6 +121,7 @@ export function SiteHeader({ onHome = false }: { onHome?: boolean }) {
   };
 
   return (
+    <>
     <header className={`site-header${hidden ? " is-hidden" : ""}`}>
       <Link href={onHome ? "#top" : "/"} className="brand" scroll>
         <img className="brand-logo" src="/images/brand/berlin-cathedral-stamp.webp" alt="Aziz Baratov" />
@@ -137,5 +145,7 @@ export function SiteHeader({ onHome = false }: { onHome?: boolean }) {
       </button>
       <HeaderControls className="header-controls-desktop" language={language} theme={theme} selectLanguage={selectLanguage} toggleTheme={toggleTheme} />
     </header>
+    {menuOpen ? <button className="mobile-menu-backdrop" type="button" aria-label={language === "en" ? "Close menu" : "Menü schließen"} onClick={() => setMenuOpen(false)} /> : null}
+    </>
   );
 }
