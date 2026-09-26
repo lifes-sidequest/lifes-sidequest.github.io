@@ -18,6 +18,12 @@ test("mobile layout stacks variations, removes the bottom fade, and gives the me
   assert.doesNotMatch(css.match(/\.mobile-menu-backdrop\{[^}]*\}/)?.[0] ?? "", /backdrop-filter/);
 });
 
+test("desktop pages use a softer theme-aware bottom fade", async () => {
+  const css = await readFile(new URL("styles/site.css", root), "utf8");
+  assert.match(css, /body::after\{[^}]*height:clamp\(190px,26vh,280px\)[^}]*rgba\(255,255,255,\.06\) 25%[^}]*rgba\(255,255,255,\.9\) 94%/s);
+  assert.match(css, /\[data-theme="dark"\] body::after\{[^}]*rgba\(23,23,23,\.06\) 25%[^}]*rgba\(23,23,23,\.9\) 94%/s);
+});
+
 test("agent mode normalizes trailing slashes and the cursor remains above the loader", async () => {
   const helper = await readFile(new URL("lib/agent-mode-return.mjs", root), "utf8");
   const switcher = await readFile(new URL("app/_components/agent-mode-switch.tsx", root), "utf8");
@@ -33,14 +39,17 @@ test("agent mode normalizes trailing slashes and the cursor remains above the lo
 test("the shared currency converter promo is localized and non-interactive", async () => {
   const promo = await readFile(new URL("app/_components/currency-converter-promo.tsx", root), "utf8");
   const css = await readFile(new URL("styles/site.css", root), "utf8");
-  assert.match(promo, /COMING SOON/);
+  assert.match(promo, /COMING SOON ON iOS/);
   assert.match(promo, /Convert currencies without losing the moment/);
   assert.match(promo, /Währungen umrechnen, ohne den Moment zu verlieren/);
   assert.match(promo, /currency-promo-sphere/);
   assert.match(promo, /headingLines: \["Convert currencies without", "losing the moment"\]/);
   assert.match(css, /\.currency-promo-sphere\{[^}]*radial-gradient/);
   assert.match(css, /\.currency-promo\{[^}]*place-items:center/);
-  assert.match(css, /\.currency-promo\{[^}]*#343737[^}]*#aeb1b1/);
+  assert.match(css, /\.currency-promo h2\{[^}]*line-height:1\.08/s);
+  assert.match(css, /\.currency-promo h2\{[^}]*padding-bottom:\.12em/s);
+  assert.match(css, /\.currency-promo\{[^}]*#343737[^}]*#aeb1b1/s);
+  assert.match(css, /\.currency-promo-sphere\{[^}]*box-shadow:0 -16px 52px rgba\(255,255,255,\.72\)/s);
   assert.doesNotMatch(promo, /<Link|<a |<button/);
 
   const files = [

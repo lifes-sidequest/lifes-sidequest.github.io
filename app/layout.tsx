@@ -12,10 +12,6 @@ import { AgentModeSwitch } from "./_components/agent-mode-switch";
 export const metadata: Metadata = {
   title: "Aziz Baratov — Product Designer",
   description: "Product Designer at Kaspi.kz, based in Berlin. Selected product design work and case studies.",
-  icons: {
-    icon: "/favicon.svg",
-    shortcut: "/favicon.svg",
-  },
 };
 
 export default function RootLayout({
@@ -26,7 +22,8 @@ export default function RootLayout({
   return (
     <html lang="en" data-theme="light" suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: `(function(){try{var d=document.documentElement;var t=localStorage.getItem('portfolio-theme');var l=localStorage.getItem('portfolio-language');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';d.dataset.theme=t;d.lang=l==='de'?'de':'en';if(sessionStorage.getItem('portfolio-loader-complete')==='true')d.dataset.loaderComplete='true'}catch(e){}})()` }} />
+        <link id="theme-favicon" rel="icon" href="/favicon-light.svg" />
+        <script dangerouslySetInnerHTML={{ __html: `(function(){try{var d=document.documentElement;var t=localStorage.getItem('portfolio-theme');var l=localStorage.getItem('portfolio-language');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';d.dataset.theme=t;d.lang=l==='de'?'de':'en';var f=document.getElementById('theme-favicon');if(f)f.href=t==='dark'?'/favicon-dark.svg':'/favicon-light.svg';if(sessionStorage.getItem('portfolio-loader-complete')==='true')d.dataset.loaderComplete='true'}catch(e){}})()` }} />
       </head>
       <body>
         <SiteLoader />

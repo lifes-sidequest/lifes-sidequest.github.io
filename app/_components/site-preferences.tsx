@@ -34,6 +34,8 @@ export function SitePreferencesProvider({ children }: { children: React.ReactNod
       setTheme(initialTheme);
       document.documentElement.lang = initialLanguage;
       document.documentElement.dataset.theme = initialTheme;
+      const favicon = document.getElementById("theme-favicon") as HTMLLinkElement | null;
+      if (favicon) favicon.href = initialTheme === "dark" ? "/favicon-dark.svg" : "/favicon-light.svg";
     }, 0);
     return () => {
       window.clearTimeout(timer);
@@ -69,6 +71,8 @@ export function SitePreferencesProvider({ children }: { children: React.ReactNod
       const next = current === "light" ? "dark" : "light";
       window.localStorage.setItem("portfolio-theme", next);
       document.documentElement.dataset.theme = next;
+      const favicon = document.getElementById("theme-favicon") as HTMLLinkElement | null;
+      if (favicon) favicon.href = next === "dark" ? "/favicon-dark.svg" : "/favicon-light.svg";
       return next;
     });
     const transitionDocument = document as Document & { startViewTransition?: (callback: () => void) => { finished: Promise<void> } };

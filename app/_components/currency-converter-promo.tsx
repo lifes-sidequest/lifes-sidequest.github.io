@@ -20,7 +20,7 @@ export function CurrencyConverterPromo({ language }: CurrencyConverterPromoProps
       <div className="currency-promo-grid" aria-hidden="true" />
       <div className="currency-promo-sphere" aria-hidden="true" />
       <div className="currency-promo-content">
-        <span className="currency-promo-badge">COMING SOON</span>
+        <span className="currency-promo-badge">COMING SOON ON iOS</span>
         <h2>{text.headingLines.map((line) => <span key={line}>{line}</span>)}</h2>
         <p>{text.body}</p>
       </div>

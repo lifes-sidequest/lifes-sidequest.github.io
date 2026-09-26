@@ -466,27 +466,30 @@ test("keeps the header CV label and download icon in one row", async () => {
   assert.match(styles, /\.header-control-motion:active\{transform:scale\(\.93\)\}/);
 });
 
-test("uses a static cathedral postage stamp as the header brand and a simplified stamp favicon", async () => {
-  const [header, styles, favicon] = await Promise.all([
+test("uses a handwritten Baratov wordmark and site-theme-aware stamp favicons", async () => {
+  const [header, styles, layout, preferences, lightFavicon, darkFavicon] = await Promise.all([
     readFile(new URL("app/_components/site-header.tsx", root), "utf8"),
     readFile(new URL("styles/site.css", root), "utf8"),
-    readFile(new URL("public/favicon.svg", root), "utf8"),
+    readFile(new URL("app/layout.tsx", root), "utf8"),
+    readFile(new URL("app/_components/site-preferences.tsx", root), "utf8"),
+    readFile(new URL("public/favicon-light.svg", root), "utf8"),
+    readFile(new URL("public/favicon-dark.svg", root), "utf8"),
   ]);
 
-  assert.match(header, /src="\/images\/brand\/berlin-cathedral-stamp\.webp"/);
-  assert.match(header, /alt="Aziz Baratov"/);
+  assert.match(header, /className="brand-wordmark">Baratov\.<\/span>/);
+  assert.match(header, /aria-label="Aziz Baratov"/);
   assert.doesNotMatch(header, /logo-cooking-the-design\.svg/);
-  assert.match(styles, /\.brand-logo\{[^}]*width:96px[^}]*height:48px[^}]*transform:none/s);
-  assert.match(styles, /@media\(max-width:809px\)[\s\S]*?\.brand-logo\{[^}]*width:80px[^}]*height:40px/s);
-  assert.doesNotMatch(styles, /\.brand-logo:hover\{[^}]*(?:transform|animation)/s);
-  assert.match(favicon, /<svg[^>]*viewBox="0 0 64 64"/);
-  assert.match(favicon, /prefers-color-scheme:\s*dark/);
-  assert.match(favicon, /\.stamp \{ fill: #181818; \}/);
-  assert.match(favicon, /\.letter \{ fill: #fff; \}/);
-  assert.match(favicon, /@media \(prefers-color-scheme: dark\) \{[\s\S]*?\.stamp \{ fill: #fff; \}[\s\S]*?\.letter \{ fill: #181818; \}[\s\S]*?\}/);
-  assert.match(favicon, /class="letter"[^>]*>B<\/text>/);
-  assert.doesNotMatch(favicon, /<image|href=/);
-  await access(new URL("public/images/brand/berlin-cathedral-stamp.webp", root));
+  assert.match(styles, /@font-face\{font-family:"Ephesis"[^}]*ephesis-400-subset\.woff2/s);
+  assert.match(styles, /\.brand-wordmark\{[^}]*font-family:"Ephesis"[^}]*font-size:32px[^}]*rotate\(-8deg\)/s);
+  assert.match(styles, /\.brand:hover \.brand-wordmark[^}]*scale\(1\.06\)[^}]*drop-shadow/s);
+  assert.match(layout, /id="theme-favicon"[^>]*href="\/favicon-light\.svg"/);
+  assert.match(preferences, /favicon\.href = next === "dark" \? "\/favicon-dark\.svg" : "\/favicon-light\.svg"/);
+  assert.match(lightFavicon, /class="stamp"[^>]*fill="#181818"/);
+  assert.match(lightFavicon, /class="letter"[^>]*fill="#fff"[^>]*>B<\/text>/);
+  assert.match(darkFavicon, /class="stamp"[^>]*fill="#fff"/);
+  assert.match(darkFavicon, /class="letter"[^>]*fill="#181818"[^>]*>B<\/text>/);
+  assert.doesNotMatch(lightFavicon + darkFavicon, /prefers-color-scheme|<image|href=/);
+  await access(new URL("public/fonts/ephesis-400-subset.woff2", root));
 });
 
 test("builds the localized Shots and Inspiration coming-soon page", async () => {

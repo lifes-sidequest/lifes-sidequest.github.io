@@ -123,8 +123,8 @@ export function SiteHeader({ onHome = false }: { onHome?: boolean }) {
   return (
     <>
     <header className={`site-header${hidden ? " is-hidden" : ""}`}>
-      <Link href={onHome ? "#top" : "/"} className="brand" scroll>
-        <img className="brand-logo" src="/images/brand/berlin-cathedral-stamp.webp" alt="Aziz Baratov" />
+      <Link href={onHome ? "#top" : "/"} className="brand" aria-label="Aziz Baratov" scroll>
+        <span className="brand-wordmark">Baratov.</span>
       </Link>
       <nav className={menuOpen ? "open" : ""} aria-label="Main navigation">
         {navigation[language].map((item) => (
