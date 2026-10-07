@@ -96,6 +96,11 @@ test("Kaspi courier infographics connect every delivery brand", async () => {
   assert.match(diagrams, /courier-map-item/);
   assert.match(diagrams, /preserveAspectRatio="none"/);
   assert.match(diagrams, /beforeCaption: "Delivery"/);
+  assert.match(diagrams, /"M124 180 L252 180"/);
+  assert.match(diagrams, /"M252 180 C315 180 350 54 450 54"/);
+  assert.match(diagrams, /const afterDesktop = \["M124 180 L474 180"\]/);
+  assert.match(diagrams, /"M180 128 C180 140 54 150 45 174"/);
+  assert.match(diagrams, /const afterMobile = \["M180 128 C180 145 180 158 180 174"\]/);
   assert.match(css, /\.courier-map-line-flow\{[^}]*animation:[^}]*courier-map-flow/);
   assert.match(css, /\.courier-map-item\{[^}]*animation:[^}]*courier-map-item-in/);
   assert.match(css, /\.courier-map-source\{left:12%;top:50%/);

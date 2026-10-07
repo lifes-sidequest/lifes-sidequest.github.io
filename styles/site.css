@@ -276,6 +276,11 @@ body{opacity:1;transition:opacity .275s cubic-bezier(.22,1,.36,1),background-col
 .currency-promo h2{max-width:none;margin:22px 0 12px;padding-bottom:.12em;font-size:clamp(44px,5.5vw,78px);font-weight:480;line-height:1.08;letter-spacing:-.06em;background:linear-gradient(110deg,#fff 20%,#b9b9b9 90%);background-clip:text;-webkit-background-clip:text;color:transparent}
 .currency-promo h2 span{display:block;white-space:nowrap}
 .currency-promo p{max-width:620px;margin:0;color:#a3a3a3;font-size:17px;line-height:1.45;letter-spacing:-.02em}
+.currency-promo-cover{height:100%;margin:0;border-radius:inherit;container-type:inline-size}
+.currency-promo-cover .currency-promo-grid{background-size:28px 28px}
+.currency-promo-cover .currency-promo-sphere{top:calc(100% - 14px);width:180%;height:180px;box-shadow:0 -8px 28px rgba(255,255,255,.7)}
+.currency-promo-cover .currency-promo-content{padding:0 22px}
+.currency-promo-cover h2{margin:0;padding-bottom:.12em;font-size:clamp(26px,5.6cqi,44px);line-height:1.08}
 footer>.currency-promo{grid-column:1/-1}
 
 @media(max-width:809px){
@@ -293,6 +298,7 @@ footer>.currency-promo{grid-column:1/-1}
   .currency-promo-content{padding:0 14px}
   .currency-promo h2{font-size:clamp(27px,8.2vw,40px);letter-spacing:-.055em}
   .currency-promo p{font-size:15px}
+  .currency-promo-cover{height:100%;margin-top:0}
 }
 .nav-label{height:72px;line-height:72px;margin-inline:-10px;padding-inline:10px;overflow:hidden;color:#525252;font-weight:400;-webkit-mask-image:none;mask-image:none}
 .brand{display:inline-flex;width:max-content;height:80px;align-items:center;font-weight:400}
@@ -428,6 +434,12 @@ footer>.currency-promo{grid-column:1/-1}
 .case-media-hero{height:auto;aspect-ratio:16/9}
 .case-project-image{display:block;width:100%;object-fit:cover;border-radius:8px}
 .case-media-wide{height:auto;aspect-ratio:1.594/1;margin-top:8px}
+.case-overview-media{position:relative;overflow:hidden}
+.kaspi-courier-overview{position:absolute;top:5%;left:50%;display:block;width:90%;height:auto;max-width:none;transform:translateX(-50%)}
+.kaspi-courier-ecosystem-media{position:relative;overflow:hidden}
+.kaspi-courier-ecosystem-artwork{object-fit:contain;object-position:center}
+.kaspi-courier-variation-media{position:relative;overflow:hidden}
+.kaspi-courier-variation-image{object-fit:cover;object-position:center}
 .kaspi-map{position:relative;isolation:isolate;overflow:hidden;border-radius:8px;background:#f1f1f1;color:#181818}
 .kaspi-map-lines{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
 .kaspi-map-lines-mobile{display:none}
@@ -510,6 +522,7 @@ footer>.currency-promo{grid-column:1/-1}
 .case-practice-video-frame{overflow:hidden}
 .case-practice-video-frame .case-practice-video{display:block;width:100%;height:100%}
 .case-practice-video-primary{transform:scale(1.1);transform-origin:center bottom}
+.kaspi-courier-auth-video .viewport-video-media{transform:scale(1.2);transform-origin:center}
 [data-theme="dark"] .case-gallery-grid .case-placeholder{background:#262626}
 .case-media-panorama{height:600px}
 .case-variation-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
@@ -752,9 +765,8 @@ footer>.currency-promo{grid-column:1/-1}
 .projects-catalog-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:38px 8px}
 .catalog-project-card{min-width:0}
 .catalog-project-card figure{height:auto;aspect-ratio:1.52/1;margin-bottom:12px}
-.coming-soon-badge{position:absolute;z-index:2;top:16px;right:16px;display:inline-flex;align-items:center;justify-content:center;padding:7px 14px;border-radius:999px;background:rgba(0,0,0,.1);color:#525252;font-size:11px;font-weight:500;line-height:1;letter-spacing:0;white-space:nowrap;pointer-events:none}
-[data-theme="dark"] .coming-soon-badge{background:rgba(255,255,255,.1);color:#a3a3a3}
-.catalog-project-card h2{font-size:14px;font-weight:500}
+.coming-soon-badge{justify-content:center;gap:0;padding-left:14px;white-space:nowrap}
+.catalog-project-card>h2{font-size:14px;font-weight:500}
 .catalog-project-card p{font-size:12px}
 .projects-catalog-side{padding:64px 0}
 .projects-catalog-side .projects-catalog-side-title{color:var(--text)!important}

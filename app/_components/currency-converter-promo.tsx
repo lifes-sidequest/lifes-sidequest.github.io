@@ -27,3 +27,16 @@ export function CurrencyConverterPromo({ language }: CurrencyConverterPromoProps
     </section>
   );
 }
+
+export function CurrencyConverterCover({ language }: CurrencyConverterPromoProps) {
+  const text = copy[language];
+  return (
+    <div className="currency-promo currency-promo-cover" aria-hidden="true">
+      <div className="currency-promo-grid" />
+      <div className="currency-promo-sphere" />
+      <div className="currency-promo-content">
+        <h2>{text.headingLines.map((line) => <span key={line}>{line}</span>)}</h2>
+      </div>
+    </div>
+  );
+}

@@ -61,6 +61,73 @@ test("shows localized project status badges and disables coming-soon links", asy
   assert.match(styles, /@keyframes project-status-pulse/);
 });
 
+test("shows the five supplied covers on coming-soon project cards in both themes", async () => {
+  const catalog = await readFile(new URL("app/projects/projects-catalog.tsx", root), "utf8");
+  const covers = [
+    ["Adata redesign", "adata-redesign.webp"],
+    ["A-Compliance", "a-compliance.webp"],
+    ["Compliance platform logo", "compliance-platform-logo.webp"],
+    ["Thousand company logo", "thousand-company-logo.webp"],
+    ["JTI car management", "jti-car-management.webp"],
+  ];
+
+  for (const [title, file] of covers) {
+    const projectEntry = catalog.match(new RegExp(`title: "${title}"[^\\n]*image: "/images/projects/catalog/${file}"[^\\n]*`))?.[0] ?? "";
+    assert.notEqual(projectEntry, "");
+    assert.doesNotMatch(projectEntry, /darkImage:/);
+    await access(new URL(`public/images/projects/catalog/${file}`, root));
+  }
+
+  assert.match(catalog, /const placeholderImage = theme === "dark" && project\.darkImage \? project\.darkImage : project\.image/);
+  assert.match(catalog, /<ComingSoonBadge language=\{language\} \/>/);
+});
+
+test("switches the six Kaspi catalog covers with the site theme", async () => {
+  const catalog = await readFile(new URL("app/projects/projects-catalog.tsx", root), "utf8");
+  const covers = [
+    ["Apple landing page", "apple-landing-page"],
+    ["Messanger redesign", "messanger-redesign"],
+    ["Seller performance metrics", "seller-performance-metrics"],
+    ["Trade-in", "trade-in"],
+    ["Message grouping", "message-grouping"],
+    ["Messenger calls", "messenger-calls"],
+  ];
+
+  for (const [title, slug] of covers) {
+    assert.match(
+      catalog,
+      new RegExp(`title: "${title}"[^\\n]*image: "/images/projects/catalog/${slug}-light\\.webp"[^\\n]*darkImage: "/images/projects/catalog/${slug}-dark\\.webp"`),
+    );
+    await access(new URL(`public/images/projects/catalog/${slug}-light.webp`, root));
+    await access(new URL(`public/images/projects/catalog/${slug}-dark.webp`, root));
+  }
+
+  assert.match(catalog, /const placeholderImage = theme === "dark" && project\.darkImage \? project\.darkImage : project\.image/);
+  assert.match(catalog, /placeholderImage \? <img src=\{placeholderImage\} alt="" \/> : null/);
+});
+
+test("reuses the published project badge surface for catalog cards", async () => {
+  const badge = await readFile(new URL("app/_components/coming-soon-badge.tsx", root), "utf8");
+
+  assert.match(badge, /className="coming-soon-badge project-status"/);
+});
+
+test("reuses the footer currency artwork on the Currency Converter card", async () => {
+  const catalog = await readFile(new URL("app/projects/projects-catalog.tsx", root), "utf8");
+  const promo = await readFile(new URL("app/_components/currency-converter-promo.tsx", root), "utf8");
+  const styles = await readFile(new URL("styles/site.css", root), "utf8");
+
+  assert.match(promo, /export function CurrencyConverterCover/);
+  assert.match(promo, /currency-promo currency-promo-cover/);
+  assert.match(promo, /currency-promo-grid/);
+  assert.match(promo, /currency-promo-sphere/);
+  assert.match(catalog, /<CurrencyConverterCover language=\{language\} \/>/);
+  assert.match(styles, /\.currency-promo-cover\{[^}]*container-type:inline-size/);
+  assert.match(styles, /\.currency-promo-cover h2\{[^}]*font-size:clamp\(26px,5\.6cqi,44px\)/);
+  assert.doesNotMatch(styles, /@media\(max-width:809px\)[\s\S]*\.currency-promo-cover h2\{font-size:/);
+  assert.match(styles, /\.catalog-project-card>h2\{font-size:14px;font-weight:500\}/);
+});
+
 test("renders the localized open-to-work copy as a green status badge", async () => {
   const portfolio = await readFile(new URL("app/_components/portfolio.tsx", root), "utf8");
   const styles = await readFile(new URL("styles/site.css", root), "utf8");

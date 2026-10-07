@@ -1,5 +1,7 @@
 "use client";
 
+import CardFanCarousel from "@/components/ui/card-fan-carousel";
+import Image from "next/image";
 import { ProjectStatusBadge } from "../../_components/project-status-badge";
 import { RevealCharacters } from "../../_components/reveal-characters";
 import { SiteHeader } from "../../_components/site-header";
@@ -32,9 +34,9 @@ const copy = {
     solutionText: "Kaspi creates its own delivery application and brings couriers directly into the ecosystem. Integration with the main Kaspi application enables fast order and status exchange, while connected banking services simplify transactions between couriers and the bank. The owned network is designed to stop subsidizing partner delivery, accelerate fulfilment, extend express-delivery hours, create new jobs, and give Kaspi direct control over the complete delivery experience.",
     before: "Before",
     after: "After",
-    practice: "The courier journey",
-    ecosystem: "One connected delivery ecosystem",
-    variations: "Delivery scenarios",
+    practice: "In practice",
+    ecosystem: "Across the ecosystem",
+    variations: "Variations",
     impact: "Impact",
     impactTitle: "A faster, more sustainable delivery model",
     impactText: "The target operating model is expected to reach 1.8 orders per hour, increase courier productivity by 200%, and reduce CPO by 60% to 2,263 KZT per order. These figures are product and operational targets for the owned Kaspi Delivery network.",
@@ -67,9 +69,9 @@ const copy = {
     solutionText: "Kaspi entwickelt eine eigene Liefer-App und bindet Kuriere direkt in das Ökosystem ein. Die Integration mit der Kaspi-Hauptanwendung ermöglicht einen schnellen Austausch von Bestell- und Statusdaten; verbundene Bankdienste vereinfachen Transaktionen zwischen Kurieren und der Bank. Das eigene Netzwerk soll subventionierte Partnerlieferungen ersetzen, die Zustellung beschleunigen, Express-Zeiten erweitern, neue Arbeitsplätze schaffen und Kaspi direkte Kontrolle über das gesamte Liefererlebnis geben.",
     before: "Vorher",
     after: "Nachher",
-    practice: "Die Kurierreise",
-    ecosystem: "Ein verbundenes Lieferökosystem",
-    variations: "Lieferszenarien",
+    practice: "In der Praxis",
+    ecosystem: "Im gesamten Ökosystem",
+    variations: "Varianten",
     impact: "Wirkung",
     impactTitle: "Ein schnelleres und nachhaltigeres Liefermodell",
     impactText: "Das Zielmodell soll 1.8 Aufträge pro Stunde erreichen, die Kurierproduktivität um 200% steigern und den CPO um 60% auf 2,263 KZT pro Auftrag senken. Diese Werte sind Produkt- und Betriebsziele für das eigene Kaspi-Delivery-Netzwerk.",
@@ -83,6 +85,34 @@ const copy = {
   },
 } as const;
 
+const lightCarouselCards = [
+  "01-profile.webp",
+  "02-theme.webp",
+  "03-update.webp",
+  "04-permissions.webp",
+  "05-login.webp",
+  "06-demand.webp",
+  "07-splash.webp",
+  "08-offline.webp",
+  "09-delivery.webp",
+  "10-pause.webp",
+  "11-location.webp",
+].map((file) => ({ imgUrl: `/images/projects/kaspi-courier/carousel/${file}` }));
+
+const darkCarouselCards = [
+  "01-profile-dark.webp",
+  "02-theme-dark.webp",
+  "03-update-dark.webp",
+  "04-permissions-dark.webp",
+  "05-login-dark.webp",
+  "06-demand-dark.webp",
+  "07-splash-dark.webp",
+  "08-offline-dark.webp",
+  "09-delivery-dark.webp",
+  "10-pause-dark.webp",
+  "11-location-dark.webp",
+].map((file) => ({ imgUrl: `/images/projects/kaspi-courier/carousel/${file}` }));
+
 function Placeholder({ className = "", label }: { className?: string; label: string }) {
   return <div className={`case-placeholder scroll-reveal ${className}`.trim()} aria-label={label} />;
 }
@@ -91,6 +121,7 @@ export function KaspiCourierCase() {
   const now = useSiteClock();
   const { language, theme, languageHasChanged } = useSitePreferences();
   const text = copy[language];
+  const carouselCards = theme === "dark" ? darkCarouselCards : lightCarouselCards;
   const time = now
     ? new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit", hour12: false, timeZone: "Europe/Berlin" }).format(now)
     : "";
@@ -126,7 +157,19 @@ export function KaspiCourierCase() {
             fit="cover"
             aria-label="Kaspi courier interface preview"
           />
-          <Placeholder className="case-media-wide" label="Kaspi courier project overview placeholder" />
+          <div className="case-placeholder case-media-wide case-overview-media scroll-reveal">
+            <Image
+              src={theme === "dark"
+                ? "/images/projects/kaspi-courier/overview-dark.jpg"
+                : "/images/projects/kaspi-courier/overview-light.jpg"}
+              alt="Kaspi courier navigation and delivery interface screens"
+              width={2200}
+              height={1867}
+              sizes="(max-width: 760px) calc(100vw - 32px), 64vw"
+              className="kaspi-courier-overview"
+              priority
+            />
+          </div>
 
           <section className="case-text-section scroll-reveal">
             <h3>{text.problem}</h3>
@@ -151,18 +194,116 @@ export function KaspiCourierCase() {
 
       <section className="case-gallery-section scroll-reveal">
         <h3>{text.practice}</h3>
-        <div className="case-gallery-grid">{Array.from({ length: 4 }, (_, index) => <Placeholder key={index} label={`Kaspi courier practice placeholder ${index + 1}`} />)}</div>
+        <div className="case-gallery-grid">
+          <ViewportVideo
+            key={`kaspi-courier-auth-${theme}`}
+            src={theme === "dark"
+              ? "/images/projects/kaspi-courier/auth-dark.webm"
+              : "/images/projects/kaspi-courier/auth-light.webm"}
+            mobileSrc={theme === "dark"
+              ? "/images/projects/kaspi-courier/auth-dark.mp4"
+              : "/images/projects/kaspi-courier/auth-light.mp4"}
+            fit="contain"
+            className="case-placeholder case-practice-video kaspi-courier-auth-video"
+            aria-label="Kaspi courier authentication flow"
+          />
+          <ViewportVideo
+            key={`kaspi-courier-search-${theme}`}
+            src={theme === "dark"
+              ? "/images/projects/kaspi-courier/search-dark.webm"
+              : "/images/projects/kaspi-courier/search-light.webm"}
+            mobileSrc={theme === "dark"
+              ? "/images/projects/kaspi-courier/search-dark.mp4"
+              : "/images/projects/kaspi-courier/search-light.mp4"}
+            fit="contain"
+            className="case-placeholder case-practice-video kaspi-courier-auth-video"
+            aria-label="Kaspi courier delivery search flow"
+          />
+          <ViewportVideo
+            key={`kaspi-courier-result-${theme}`}
+            src={theme === "dark"
+              ? "/images/projects/kaspi-courier/result-dark.webm"
+              : "/images/projects/kaspi-courier/result-light.webm"}
+            mobileSrc={theme === "dark"
+              ? "/images/projects/kaspi-courier/result-dark.mp4"
+              : "/images/projects/kaspi-courier/result-light.mp4"}
+            fit="contain"
+            className="case-placeholder case-practice-video kaspi-courier-auth-video"
+            aria-label="Kaspi courier delivery result flow"
+          />
+          <ViewportVideo
+            key={`kaspi-courier-money-${theme}`}
+            src={theme === "dark"
+              ? "/images/projects/kaspi-courier/money-dark.webm"
+              : "/images/projects/kaspi-courier/money-light.webm"}
+            mobileSrc={theme === "dark"
+              ? "/images/projects/kaspi-courier/money-dark.mp4"
+              : "/images/projects/kaspi-courier/money-light.mp4"}
+            fit="contain"
+            className="case-placeholder case-practice-video kaspi-courier-auth-video"
+            aria-label="Kaspi courier earnings flow"
+          />
+        </div>
       </section>
 
       <section className="case-gallery-section scroll-reveal">
         <h3>{text.ecosystem}</h3>
-        <Placeholder className="case-media-panorama" label="Kaspi courier ecosystem placeholder" />
+        <div className="case-placeholder case-media-panorama case-project-image kaspi-courier-ecosystem-media" aria-label="Kaspi Delivery identity and courier transport lineup">
+          <Image
+            src={theme === "dark"
+              ? "/images/projects/kaspi-courier/ecosystem-identity-dark.webp"
+              : "/images/projects/kaspi-courier/ecosystem-identity.webp"}
+            alt="Kaspi Delivery identity with courier, car, bicycle, motorcycle, and scooter"
+            fill
+            sizes="(max-width: 900px) 100vw, 59vw"
+            className="kaspi-courier-ecosystem-artwork"
+          />
+        </div>
       </section>
 
       <section className="case-gallery-section scroll-reveal">
         <h3>{text.variations}</h3>
-        <div className="case-variation-grid">{Array.from({ length: 3 }, (_, index) => <Placeholder key={index} label={`Kaspi courier variation placeholder ${index + 1}`} />)}</div>
-        <Placeholder className="case-media-wide case-variation-wide" label="Kaspi courier wide variation placeholder" />
+        <div className="case-variation-grid">
+          <div className="case-placeholder kaspi-courier-variation-media" aria-label="Kaspi Delivery customer tracking interface">
+            <Image
+              src={theme === "dark"
+                ? "/images/projects/kaspi-courier/variation-client-dark.webp"
+                : "/images/projects/kaspi-courier/variation-client-light.webp"}
+              alt="Kaspi Delivery customer tracking interface"
+              fill
+              sizes="(max-width: 809px) 100vw, 20vw"
+              className="kaspi-courier-variation-image"
+            />
+          </div>
+          <div className="case-placeholder kaspi-courier-variation-media" aria-label="Kaspi Delivery pickup code interface">
+            <Image
+              src={theme === "dark"
+                ? "/images/projects/kaspi-courier/variation-code-dark.webp"
+                : "/images/projects/kaspi-courier/variation-code-light.webp"}
+              alt="Kaspi Delivery pickup code interface"
+              fill
+              sizes="(max-width: 809px) 100vw, 20vw"
+              className="kaspi-courier-variation-image"
+            />
+          </div>
+          <div className="case-placeholder kaspi-courier-variation-media" aria-label="Kaspi Delivery customer signature interface">
+            <Image
+              src={theme === "dark"
+                ? "/images/projects/kaspi-courier/variation-sign-dark.webp"
+                : "/images/projects/kaspi-courier/variation-sign-light.webp"}
+              alt="Kaspi Delivery customer signature interface"
+              fill
+              sizes="(max-width: 809px) 100vw, 20vw"
+              className="kaspi-courier-variation-image"
+            />
+          </div>
+        </div>
+        <CardFanCarousel
+          key={`kaspi-courier-carousel-${theme}`}
+          cards={carouselCards}
+          cardRatio={1114 / 2278}
+          className="case-placeholder case-media-wide case-variation-wide scroll-reveal"
+        />
       </section>
 
       <section className="case-text-section case-impact scroll-reveal">

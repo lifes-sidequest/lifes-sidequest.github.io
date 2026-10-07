@@ -10,11 +10,11 @@ export interface CardFanItem {
 interface CardFanCarouselProps {
   cards: CardFanItem[];
   className?: string;
+  cardRatio?: number;
 }
 
 const MAX_VISIBLE = 7;
 const HALF = Math.floor(MAX_VISIBLE / 2);
-const CARD_RATIO = 1113 / 2420;
 
 function visibleSlots(total: number, center: number) {
   const slots = new Map<number, number>();
@@ -28,7 +28,7 @@ function visibleSlots(total: number, center: number) {
   return slots;
 }
 
-export default function CardFanCarousel({ cards, className = "" }: CardFanCarouselProps) {
+export default function CardFanCarousel({ cards, className = "", cardRatio = 1113 / 2420 }: CardFanCarouselProps) {
   const rootRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const previousVisibleRef = useRef<Set<number>>(new Set());
@@ -112,7 +112,7 @@ export default function CardFanCarousel({ cards, className = "" }: CardFanCarous
     const width = stage.clientWidth;
     const height = stage.clientHeight;
     const cardHeight = Math.min(405, Math.max(185, height * 0.8));
-    const cardWidth = cardHeight * CARD_RATIO;
+    const cardWidth = cardHeight * cardRatio;
     const visibleCount = Math.min(cards.length, MAX_VISIBLE);
     const centerSlot = Math.floor(visibleCount / 2);
     const availableWidth = Math.max(0, width - cardWidth - 32);
@@ -239,7 +239,7 @@ export default function CardFanCarousel({ cards, className = "" }: CardFanCarous
     return () => {
       unlockRef.current?.kill();
     };
-  }, [cards.length, centerIndex, entered, hoveredIndex, layoutVersion]);
+  }, [cardRatio, cards.length, centerIndex, entered, hoveredIndex, layoutVersion]);
 
   useEffect(() => () => {
     unlockRef.current?.kill();

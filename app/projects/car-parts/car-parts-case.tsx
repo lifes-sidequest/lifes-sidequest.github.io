@@ -395,6 +395,7 @@ export function CarPartsCase() {
             : "/images/projects/car-parts/demo-car-parts-light2.mp4"}
           aria-label="Car Parts ecosystem demo"
           className="case-placeholder case-media-panorama case-practice-video car-parts-practice-video scroll-reveal"
+          fit="contain"
         />
       </section>
 

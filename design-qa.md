@@ -93,3 +93,54 @@ final result: passed
 - Findings: no actionable P0/P1/P2 mismatch in the inspected light-theme desktop and mobile states. Dark visual state was not separately captured.
 
 final result: passed
+
+---
+
+# Design QA — Kaspi courier overview media
+
+- Source visual truth: `/Users/azekelele/Desktop/codex_projects/portfolio/design-qa-reference.png`
+- Browser-rendered implementation: `/Users/azekelele/Desktop/codex_projects/portfolio/design-qa-kaspi-courier-overview.png`
+- Focused implementation capture: `/Users/azekelele/Desktop/codex_projects/portfolio/design-qa-kaspi-courier-overview-block.png`
+- Combined comparison: `/Users/azekelele/Desktop/codex_projects/portfolio/design-qa-comparison.png`
+- Viewport: 1768 × 1118 CSS px, device pixel ratio 1
+- Source pixels: 1768 × 1102
+- Implementation pixels: 1768 × 1118
+- State: desktop, light theme, Kaspi courier case page
+
+## Full-view comparison evidence
+
+The reference and implementation were reviewed together in `design-qa-comparison.png`. The implementation keeps the existing case-study grid while matching the reference media composition inside the overview container: the artwork is centered horizontally, begins 5% below the top edge, occupies 90% of the container width, and continues below the clipped lower edge.
+
+## Focused region comparison evidence
+
+The browser-reported container is 1005.37 × 630.72 CSS px. The rendered artwork is 904.83 px wide (90% of the container), centered with 50.27 px side margins, and starts 31.53 px below the top edge (5% of the container height). Its natural proportional height is 767.87 px, producing the intended lower crop. This matches the reference's visible hierarchy: narrow side margins, a small top gap, and phones extending beyond the bottom edge.
+
+## Required fidelity surfaces
+
+- Fonts and typography: not applicable inside this raster artwork; no typography was recreated in code.
+- Spacing and layout rhythm: no actionable mismatch. Scale, horizontal centering, top spacing, radius, and lower crop match the reference structure.
+- Colors and visual tokens: existing light/dark placeholder surfaces are preserved; the supplied theme-specific artwork remains unchanged.
+- Image quality and asset fidelity: original supplied Kaspi courier artwork is used, with no generated or approximate replacement.
+- Copy and content: not applicable; all visible interface copy is part of the supplied image.
+
+## Findings
+
+No actionable P0, P1, or P2 differences remain. The project content differs from the Car Parts reference by design; only the requested composition and scale were matched.
+
+## Comparison history
+
+1. Earlier implementation used an 80% × 80% contained image, leaving excessive empty space and showing the complete bottom edge.
+2. Updated the artwork to 90% width, 5% top offset, natural proportional height, and clipped overflow.
+3. Browser geometry and the combined visual comparison confirm the revised composition.
+
+## Implementation checklist
+
+- [x] Preserve the existing media container.
+- [x] Center artwork horizontally.
+- [x] Match the reference's narrow side margins.
+- [x] Preserve the small top gap.
+- [x] Crop the lower part of the phones.
+- [x] Keep light and dark theme assets.
+- [x] Check browser console errors (none found).
+
+final result: passed
