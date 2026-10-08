@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, type CSSProperties } from "react";
+import { useEffect } from "react";
 import Link from "next/link";
 import { featuredCompetencies } from "../../content/competencies";
 import { projects } from "../../content/projects";
@@ -15,54 +15,7 @@ import { FavoriteToolsList } from "./favorite-tools-list";
 import { CurrencyConverterPromo } from "./currency-converter-promo";
 import { CopyEmailButton, portfolioEmailAddress } from "./copy-email-button";
 import { ViewportVideo } from "./viewport-video";
-
-const employmentStart = Date.UTC(2024, 2, 1, 9, 0, 0);
-const berlinDateTime = new Intl.DateTimeFormat("en-GB", {
-  timeZone: "Europe/Berlin",
-  year: "numeric",
-  month: "numeric",
-  day: "numeric",
-  hour: "numeric",
-  minute: "numeric",
-  second: "numeric",
-  hourCycle: "h23",
-});
-
-function getEmploymentDuration(now = new Date(), language: "en" | "de" = "en") {
-  const parts = Object.fromEntries(
-    berlinDateTime.formatToParts(now)
-      .filter(({ type }) => type !== "literal")
-      .map(({ type, value }) => [type, Number(value)]),
-  );
-  const current = Date.UTC(parts.year, parts.month - 1, parts.day, parts.hour, parts.minute, parts.second);
-  const cursor = new Date(employmentStart);
-
-  let years = parts.year - 2024;
-  cursor.setUTCFullYear(cursor.getUTCFullYear() + years);
-  if (cursor.getTime() > current) {
-    years -= 1;
-    cursor.setUTCFullYear(cursor.getUTCFullYear() - 1);
-  }
-
-  let months = (parts.year - cursor.getUTCFullYear()) * 12 + parts.month - 1 - cursor.getUTCMonth();
-  cursor.setUTCMonth(cursor.getUTCMonth() + months);
-  if (cursor.getTime() > current) {
-    months -= 1;
-    cursor.setUTCMonth(cursor.getUTCMonth() - 1);
-  }
-
-  let remainder = Math.max(0, current - cursor.getTime());
-  const days = Math.floor(remainder / 86_400_000);
-  remainder %= 86_400_000;
-  const hours = Math.floor(remainder / 3_600_000);
-  remainder %= 3_600_000;
-  const minutes = Math.floor(remainder / 60_000);
-  const seconds = Math.floor((remainder % 60_000) / 1_000);
-
-  return language === "de"
-    ? `${years} J., ${months} Mon., ${days} Tage, ${hours} Std., ${minutes} Min., ${seconds} Sek.`
-    : `${years} yrs, ${months} mos, ${days} days, ${hours} hrs, ${minutes} mins, ${seconds} secs.`;
-}
+import { EmploymentStatus } from "./employment-status";
 
 const portfolioCopy = {
   en: {
@@ -118,15 +71,9 @@ export function Portfolio() {
     };
   }, []);
 
-  const employmentDuration = now ? getEmploymentDuration(now, language) : "";
   const time = now ? new Intl.DateTimeFormat("en-GB", {
     hour: "2-digit", minute: "2-digit", hour12: false, timeZone: "Europe/Berlin",
   }).format(now) : "";
-  const employmentPrefix = copy.employmentPrefix;
-  const employmentSuffix = language === "de" ? " bei Kaspi.kz. " : " ";
-  const employmentText = employmentDuration
-    ? `${employmentPrefix}${employmentDuration}${employmentSuffix}`
-    : copy.employmentFallback;
 
   return (
     <main className="portfolio-page">
@@ -136,28 +83,13 @@ export function Portfolio() {
 
       <section className={`hero${languageHasChanged ? " hero-language-static" : ""}`} id="top">
         <h1 aria-label={copy.heroTitle}><RevealCharacters>{copy.heroTitle}</RevealCharacters></h1>
-        <p aria-label={`${employmentText}${copy.open}`}>
-          {employmentDuration ? (
-            <>
-              <RevealCharacters>{employmentPrefix}</RevealCharacters>
-              <span className="hero-counter">
-                <RevealCharacters offset={employmentPrefix.length}>{employmentDuration}</RevealCharacters>
-              </span>
-              <RevealCharacters offset={employmentPrefix.length + employmentDuration.length}>{employmentSuffix}</RevealCharacters>
-            </>
-          ) : (
-            <RevealCharacters>{employmentText}</RevealCharacters>
-          )}
-          {employmentDuration && (
-            <span
-              className="availability-badge project-status-online"
-              style={{ "--badge-reveal-delay": `${employmentText.length * 10 + 150}ms` } as CSSProperties}
-            >
-              <i className="project-status-dot" aria-hidden="true" />
-              <span>{copy.open}</span>
-            </span>
-          )}
-        </p>
+        <EmploymentStatus
+          initialNow={now}
+          language={language}
+          prefix={copy.employmentPrefix}
+          fallback={copy.employmentFallback}
+          open={copy.open}
+        />
         {/* Customize panel is temporarily disabled. Keep this block for a later iteration.
         <div className="hero-tools" aria-label="Display preferences preview">
           <div className="hero-garment-tag" aria-hidden="true"><span>{copy.customize}</span></div>

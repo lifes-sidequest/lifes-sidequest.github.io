@@ -46,6 +46,7 @@ test("links the Kaspi.kz Home card to its case study", async () => {
 
 test("shows localized project status badges and disables coming-soon links", async () => {
   const portfolio = await readFile(new URL("app/_components/portfolio.tsx", root), "utf8");
+  const employmentStatus = await readFile(new URL("app/_components/employment-status.tsx", root), "utf8");
   const badge = await readFile(new URL("app/_components/project-status-badge.tsx", root), "utf8");
   const styles = await readFile(new URL("styles/site.css", root), "utf8");
 
@@ -54,7 +55,7 @@ test("shows localized project status badges and disables coming-soon links", asy
   assert.match(badge, /"coming-soon": \{ en: "Coming soon", de: "Demnächst" \}/);
   assert.match(badge, /"in-production": \{ en: "In development", de: "In Entwicklung" \}/);
   assert.match(portfolio, /project\.status === "coming-soon"/);
-  assert.match(portfolio, /project-status-dot/);
+  assert.match(employmentStatus, /project-status-dot/);
   assert.match(styles, /\.project-status-online/);
   assert.match(styles, /\.project-status-offline/);
   assert.match(styles, /\.project-status-coming-soon/);
@@ -130,16 +131,18 @@ test("reuses the footer currency artwork on the Currency Converter card", async 
 
 test("renders the localized open-to-work copy as a green status badge", async () => {
   const portfolio = await readFile(new URL("app/_components/portfolio.tsx", root), "utf8");
+  const employmentStatus = await readFile(new URL("app/_components/employment-status.tsx", root), "utf8");
   const styles = await readFile(new URL("styles/site.css", root), "utf8");
 
   assert.match(portfolio, /open: "Open to Work"/);
   assert.match(portfolio, /open: "Offen für neue Aufgaben"/);
-  assert.match(portfolio, /availability-badge project-status-online/);
-  assert.match(portfolio, /\{employmentDuration && \(/);
-  assert.match(portfolio, /employmentText\.length \* 10 \+ 150/);
-  assert.match(portfolio, /className="project-status-dot"/);
-  assert.match(portfolio, /<span>\{copy\.open\}<\/span>/);
-  assert.doesNotMatch(portfolio, /<span><RevealCharacters offset=\{employmentText\.length\}>\{copy\.open\}<\/RevealCharacters><\/span>/);
+  assert.match(portfolio, /<EmploymentStatus/);
+  assert.match(employmentStatus, /availability-badge project-status-online/);
+  assert.match(employmentStatus, /\{duration && \(/);
+  assert.match(employmentStatus, /text\.length \* 10 \+ 150/);
+  assert.match(employmentStatus, /className="project-status-dot"/);
+  assert.match(employmentStatus, /<span>\{open\}<\/span>/);
+  assert.doesNotMatch(employmentStatus, /<span><RevealCharacters offset=\{text\.length\}>\{open\}<\/RevealCharacters><\/span>/);
   assert.match(styles, /\.availability-badge\{[^}]*background:rgba\(39,174,96,\.14\)/);
   assert.match(styles, /\.availability-badge\{[^}]*white-space:nowrap/);
   assert.match(styles, /\.availability-badge\{[^}]*font-weight:500/);

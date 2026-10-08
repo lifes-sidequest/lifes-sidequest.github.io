@@ -113,10 +113,6 @@ const darkCarouselCards = [
   "11-location-dark.webp",
 ].map((file) => ({ imgUrl: `/images/projects/kaspi-courier/carousel/${file}` }));
 
-function Placeholder({ className = "", label }: { className?: string; label: string }) {
-  return <div className={`case-placeholder scroll-reveal ${className}`.trim()} aria-label={label} />;
-}
-
 export function KaspiCourierCase() {
   const now = useSiteClock();
   const { language, theme, languageHasChanged } = useSitePreferences();
@@ -176,7 +172,18 @@ export function KaspiCourierCase() {
             <div><p>{text.problemText}</p></div>
           </section>
 
-          <Placeholder className="case-media-wide case-media-tall" label="Kaspi courier problem placeholder" />
+          <div className="case-placeholder case-media-wide case-media-tall kaspi-courier-problem-media scroll-reveal">
+            <Image
+              src={theme === "dark"
+                ? "/images/projects/kaspi-courier/problem-admin-dark.jpg"
+                : "/images/projects/kaspi-courier/problem-admin-light.jpg"}
+              alt="Kaspi courier administration dashboard"
+              width={2200}
+              height={1238}
+              sizes="(max-width: 760px) calc(100vw - 32px), 64vw"
+              className="kaspi-courier-problem-artwork"
+            />
+          </div>
 
           <section className="case-project-infographic case-media-wide" aria-label={`${text.goalsTitle} and ${text.roleTitle}`}>
             <article><h4>{text.goalsTitle}</h4><ul>{text.goals.map((item) => <li key={item}>{item}</li>)}</ul></article>

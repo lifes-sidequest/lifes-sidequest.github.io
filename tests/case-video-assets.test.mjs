@@ -117,6 +117,23 @@ test("Kaspi courier uses the shared case-section titles in English and German", 
   }
 });
 
+test("Kaspi courier shows the themed administration artwork in the Problem section", async () => {
+  const source = await readFile(courierCase, "utf8");
+  const styles = await readFile(new URL("styles/site.css", root), "utf8");
+  const files = ["problem-admin-light.jpg", "problem-admin-dark.jpg"];
+
+  for (const file of files) {
+    assert.match(source, new RegExp(file.replaceAll(".", "\\.")), `${file} should be referenced by the Problem artwork`);
+    assert.ok((await stat(new URL(`public/images/projects/kaspi-courier/${file}`, root))).size > 0, `${file} should exist`);
+  }
+
+  assert.match(source, /src=\{theme === "dark"[\s\S]*?problem-admin-dark\.jpg[\s\S]*?problem-admin-light\.jpg/);
+  assert.match(source, /className="kaspi-courier-problem-artwork"/);
+  assert.doesNotMatch(source, /Kaspi courier problem placeholder/);
+  assert.match(styles, /\.kaspi-courier-problem-media\{[^}]*position:relative[^}]*overflow:hidden/);
+  assert.match(styles, /\.kaspi-courier-problem-artwork\{[^}]*width:100%[^}]*height:100%[^}]*object-fit:cover[^}]*object-position:center/);
+});
+
 test("Kaspi courier shows the ecosystem identity artwork in both themes", async () => {
   const source = await readFile(courierCase, "utf8");
   const styles = await readFile(new URL("styles/site.css", root), "utf8");
